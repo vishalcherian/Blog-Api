@@ -1,4 +1,5 @@
-import Post from '../models/Post'
+import Post from '../models/Post';
+import { verifyToken } from './verifytoken';
 
 const express = require('express')
 const router = express.Router()
@@ -18,7 +19,7 @@ router.post('/', (req, res) => {
     });
 })
 
-router.get('/', (req, res) => {
+router.get('/', verifyToken, (req, res) => {
     Post.find({}, (err, posts) => {
         if(err) res.status(404).json({success: false, message: err})
         else {
